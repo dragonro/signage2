@@ -1,0 +1,331 @@
+/* Player Styles - Full Screen Digital Signage */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    min-height: 100vh;
+    /* Remove default background - let JavaScript control it */
+}
+
+/* Ensure background images display properly */
+body.bg-image {
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed !important;
+}
+
+/* Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.time-display {
+    font-size: 2em;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.date-display {
+    font-size: 1.2em;
+    opacity: 0.8;
+}
+
+/* Display Grid */
+.display-grid {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    gap: 2px;
+    padding: 2px;
+    background: transparent; /* Ensure grid is transparent */
+}
+
+/* Zone Styles */
+.player-zone {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    /* Remove default background - let zones control their own backgrounds */
+}
+
+.zone-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: white;
+}
+
+/* Enhanced zone background styles */
+.zone-glassmorphism {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+.zone-solid-bg {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.zone-image-bg {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Widget Styles */
+.widget-clock {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.clock-time {
+    font-size: 3em;
+    font-weight: 200;
+    line-height: 1;
+    margin-bottom: 0.2em;
+}
+
+.clock-date {
+    font-size: 1em;
+    opacity: 0.8;
+    line-height: 1;
+}
+
+.widget-timer {
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.timer-display {
+    font-size: 4em;
+    font-weight: 200;
+    line-height: 1;
+    margin-bottom: 0.2em;
+}
+
+.timer-label {
+    font-size: 1.5em;
+    opacity: 0.9;
+}
+
+.widget-announcement {
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.announcement-text {
+    font-size: 1.5em;
+    line-height: 1.3;
+    font-weight: 300;
+}
+
+.widget-iframe iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 8px;
+}
+
+.widget-rss {
+    padding: 15px;
+    overflow-y: auto;
+}
+
+/* Font size scaling for different content types */
+.rss-title {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.rss-item {
+    margin-bottom: 15px;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    backdrop-filter: blur(10px);
+}
+
+.rss-item-title {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.rss-item-description {
+    font-size: 0.9em;
+    opacity: 0.9;
+    line-height: 1.4;
+}
+
+.rss-item-date {
+    font-size: 0.8em;
+    opacity: 0.7;
+    margin-top: 5px;
+}
+
+/* Empty Zone */
+.widget-empty {
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+}
+
+.empty-text {
+    font-size: 1.2em;
+    opacity: 0.5;
+}
+
+/* Image Widget */
+.widget-image {
+    padding: 0;
+    overflow: hidden;
+}
+
+.widget-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Video Widget */
+.widget-video {
+    padding: 0;
+    overflow: hidden;
+}
+
+.widget-video video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Slideshow Widget */
+.widget-slideshow {
+    padding: 0;
+    overflow: hidden;
+}
+
+.slideshow-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slideshow-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Background Types */
+.bg-color {
+    background: var(--bg-color, #1a1a1a);
+}
+
+.bg-image {
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.zone-content {
+    animation: fadeIn 0.5s ease-out;
+}
+
+.clock-time {
+    animation: fadeIn 1s ease-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .clock-time {
+        font-size: 3em;
+    }
+    
+    .timer-display {
+        font-size: 4em;
+    }
+    
+    .announcement-text {
+        font-size: 1.5em;
+    }
+}
+
+@media (max-width: 768px) {
+    .top-bar {
+        height: 50px;
+        padding: 0 15px;
+    }
+    
+    .time-display {
+        font-size: 1.5em;
+    }
+    
+    .date-display {
+        font-size: 1em;
+    }
+    
+    .display-grid {
+        top: 50px;
+    }
+    
+    .clock-time {
+        font-size: 2.5em;
+    }
+    
+    .timer-display {
+        font-size: 3em;
+    }
+    
+    .announcement-text {
+        font-size: 1.2em;
+    }
+}

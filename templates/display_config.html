@@ -1,0 +1,319 @@
+{% extends "base.html" %}
+
+{% block title %}Configure Display - Digital Signage{% endblock %}
+
+{% block body %}
+<div class="container">
+    <header class="header">
+        <h1>Configure Display: {{ display[1] }}</h1>
+        <div class="header-actions">
+            <a href="/player/{{ display[0] }}" class="btn btn-success" target="_blank">
+                <i class="material-icons">play_arrow</i>
+                Preview
+            </a>
+            <a href="/displays" class="btn btn-secondary">
+                <i class="material-icons">arrow_back</i>
+                Back to Displays
+            </a>
+        </div>
+    </header>
+    
+    <div class="config-layout">
+        <div class="config-sidebar">
+            <div class="config-section">
+                <h3>Display Settings</h3>
+                <div class="form-group">
+                    <label for="displayName">Name</label>
+                    <input type="text" id="displayName" value="{{ display[1] }}">
+                </div>
+                <div class="form-group">
+                    <label for="displayDescription">Description</label>
+                    <textarea id="displayDescription" rows="3">{{ display[2] or '' }}</textarea>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Global Settings</h3>
+                <div class="form-group">
+                    <label for="globalFont">Global Font Family</label>
+                    <select id="globalFont">
+                        <optgroup label="Modern Sans-Serif">
+                            <option value="Inter, sans-serif">Inter</option>
+                            <option value="'Work Sans', sans-serif">Work Sans</option>
+                            <option value="Manrope, sans-serif">Manrope</option>
+                            <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                            <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                            <option value="Rubik, sans-serif">Rubik</option>
+                            <option value="'DM Sans', sans-serif">DM Sans</option>
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                            <option value="Outfit, sans-serif">Outfit</option>
+                            <option value="Lexend, sans-serif">Lexend</option>
+                            <option value="Sora, sans-serif">Sora</option>
+                        </optgroup>
+                        <optgroup label="Popular Sans-Serif">
+                            <option value="Roboto, sans-serif">Roboto</option>
+                            <option value="'Open Sans', sans-serif">Open Sans</option>
+                            <option value="Lato, sans-serif">Lato</option>
+                            <option value="Montserrat, sans-serif">Montserrat</option>
+                            <option value="Poppins, sans-serif">Poppins</option>
+                            <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+                            <option value="Ubuntu, sans-serif">Ubuntu</option>
+                            <option value="Nunito, sans-serif">Nunito</option>
+                            <option value="Raleway, sans-serif">Raleway</option>
+                            <option value="'PT Sans', sans-serif">PT Sans</option>
+                            <option value="Oswald, sans-serif">Oswald</option>
+                            <option value="'Fira Sans', sans-serif">Fira Sans</option>
+                            <option value="Barlow, sans-serif">Barlow</option>
+                            <option value="Quicksand, sans-serif">Quicksand</option>
+                            <option value="Karla, sans-serif">Karla</option>
+                            <option value="Mulish, sans-serif">Mulish</option>
+                            <option value="'Red Hat Display', sans-serif">Red Hat Display</option>
+                        </optgroup>
+                        <optgroup label="Serif Fonts">
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                            <option value="Merriweather, serif">Merriweather</option>
+                            <option value="'Roboto Slab', serif">Roboto Slab</option>
+                        </optgroup>
+                        <optgroup label="System Fonts">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="'Lucida Console', monospace">Lucida Console</option>
+                            <option value="Impact, sans-serif">Impact</option>
+                            <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Grid Layout</h3>
+                <div class="form-group">
+                    <label for="gridRows">Rows</label>
+                    <select id="gridRows">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="gridCols">Columns</label>
+                    <select id="gridCols">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Background</h3>
+                <div class="form-group">
+                    <label>Background Type</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="bgType" value="color" checked> Color</label>
+                        <label><input type="radio" name="bgType" value="image"> Image</label>
+                    </div>
+                </div>
+                <div id="colorPicker" class="form-group">
+                    <label for="bgColor">Background Color</label>
+                    <input type="color" id="bgColor" value="#1a1a1a">
+                </div>
+                <div id="imagePicker" class="form-group" style="display: none;">
+                    <label for="bgImage">Upload Image</label>
+                    <input type="file" id="bgImage" accept="image/*">
+                    <div id="currentImage"></div>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <button id="saveBtn" class="btn btn-primary">Save Changes</button>
+            </div>
+        </div>
+        
+        <div class="config-main">
+            <div class="grid-preview" id="gridPreview">
+                <!-- Grid zones will be generated here -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Zone Configuration Modal -->
+<div id="zoneModal" class="modal" style="display: none;">
+    <div class="modal-content large">
+        <h3>Configure Zone <span id="zoneNumber"></span></h3>
+        <form id="zoneForm">
+            <div class="form-group">
+                <label for="zoneType">Zone Type</label>
+                <select id="zoneType">
+                    <option value="empty">Empty</option>
+                    <option value="clock">Clock</option>
+                    <option value="timer">Timer</option>
+                    <option value="announcement">Announcement</option>
+                    <option value="iframe">iframe Embed</option>
+                    <option value="rss">RSS Feed</option>
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                    <option value="slideshow">Slideshow</option>
+                </select>
+            </div>
+            
+            <div id="zoneContentGroup" class="form-group">
+                <label for="zoneContent" id="zoneContentLabel">Content</label>
+                <textarea id="zoneContent" rows="4"></textarea>
+                <div id="contentHelp" class="help-text"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="zoneOpacity">Zone Opacity</label>
+                <input type="range" id="zoneOpacity" min="0" max="1" step="0.1" value="1">
+                <span id="opacityValue">100%</span>
+            </div>
+            
+            <div class="config-section">
+                <h3>Typography</h3>
+                <div class="form-group">
+                    <label for="zoneFontFamily">Font Family</label>
+                    <select id="zoneFontFamily">
+                        <option value="">Use Global Font</option>
+                        <optgroup label="Modern Sans-Serif">
+                            <option value="Inter, sans-serif">Inter</option>
+                            <option value="'Work Sans', sans-serif">Work Sans</option>
+                            <option value="Manrope, sans-serif">Manrope</option>
+                            <option value="'Space Grotesk', sans-serif">Space Grotesk</option>
+                            <option value="'IBM Plex Sans', sans-serif">IBM Plex Sans</option>
+                            <option value="Rubik, sans-serif">Rubik</option>
+                            <option value="'DM Sans', sans-serif">DM Sans</option>
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                            <option value="Outfit, sans-serif">Outfit</option>
+                            <option value="Lexend, sans-serif">Lexend</option>
+                            <option value="Sora, sans-serif">Sora</option>
+                        </optgroup>
+                        <optgroup label="Popular Sans-Serif">
+                            <option value="Roboto, sans-serif">Roboto</option>
+                            <option value="'Open Sans', sans-serif">Open Sans</option>
+                            <option value="Lato, sans-serif">Lato</option>
+                            <option value="Montserrat, sans-serif">Montserrat</option>
+                            <option value="Poppins, sans-serif">Poppins</option>
+                            <option value="'Source Sans Pro', sans-serif">Source Sans Pro</option>
+                            <option value="Ubuntu, sans-serif">Ubuntu</option>
+                            <option value="Nunito, sans-serif">Nunito</option>
+                            <option value="Raleway, sans-serif">Raleway</option>
+                            <option value="'PT Sans', sans-serif">PT Sans</option>
+                            <option value="Oswald, sans-serif">Oswald</option>
+                            <option value="'Fira Sans', sans-serif">Fira Sans</option>
+                            <option value="Barlow, sans-serif">Barlow</option>
+                            <option value="Quicksand, sans-serif">Quicksand</option>
+                            <option value="Karla, sans-serif">Karla</option>
+                            <option value="Mulish, sans-serif">Mulish</option>
+                            <option value="'Red Hat Display', sans-serif">Red Hat Display</option>
+                        </optgroup>
+                        <optgroup label="Serif Fonts">
+                            <option value="'Playfair Display', serif">Playfair Display</option>
+                            <option value="Merriweather, serif">Merriweather</option>
+                            <option value="'Roboto Slab', serif">Roboto Slab</option>
+                        </optgroup>
+                        <optgroup label="System Fonts">
+                            <option value="Arial, sans-serif">Arial</option>
+                            <option value="'Times New Roman', serif">Times New Roman</option>
+                            <option value="'Courier New', monospace">Courier New</option>
+                            <option value="Georgia, serif">Georgia</option>
+                            <option value="Verdana, sans-serif">Verdana</option>
+                            <option value="'Trebuchet MS', sans-serif">Trebuchet MS</option>
+                            <option value="'Lucida Console', monospace">Lucida Console</option>
+                            <option value="Impact, sans-serif">Impact</option>
+                            <option value="'Comic Sans MS', cursive">Comic Sans MS</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="zoneFontSize">Font Size</label>
+                    <input type="text" id="zoneFontSize" placeholder="16px, 1.2em, etc.">
+                </div>
+            </div>
+            
+            <div id="clockSettings" class="config-section" style="display: none;">
+                <h3>Clock Settings</h3>
+                <div class="form-group">
+                    <label for="timeFormat">Time Format</label>
+                    <select id="timeFormat">
+                        <option value="24h">24 Hour (14:30:45)</option>
+                        <option value="12h">12 Hour (2:30:45 PM)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dateFormat">Date Format</label>
+                    <select id="dateFormat">
+                        <option value="full">Full (Monday, June 22, 2025)</option>
+                        <option value="short">Short (Jun 22, 2025)</option>
+                        <option value="numeric">Numeric (22/06/2025)</option>
+                        <option value="iso">ISO (2025-06-22)</option>
+                        <option value="custom">Custom (DD/MM/YYYY)</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="config-section">
+                <h3>Background</h3>
+                <div class="form-group">
+                    <label>Background Type</label>
+                    <div class="radio-group">
+                        <label><input type="radio" name="zoneBgType" value="transparent" checked> Transparent</label>
+                        <label><input type="radio" name="zoneBgType" value="color"> Solid Color</label>
+                        <label><input type="radio" name="zoneBgType" value="glassmorphism"> Glassmorphism</label>
+                        <label><input type="radio" name="zoneBgType" value="image"> Image</label>
+                    </div>
+                </div>
+                
+                <div id="zoneBgColor" class="form-group" style="display: none;">
+                    <label for="zoneBackgroundColor">Background Color</label>
+                    <input type="color" id="zoneBackgroundColor" value="#000000">
+                    <label for="zoneBgOpacity">Background Opacity</label>
+                    <input type="range" id="zoneBgOpacity" min="0" max="1" step="0.1" value="0.8">
+                    <span id="zoneBgOpacityValue">80%</span>
+                </div>
+                
+                <div id="zoneBgGlass" class="form-group" style="display: none;">
+                    <label for="zoneBlur">Blur Amount (px)</label>
+                    <input type="range" id="zoneBlur" min="0" max="50" value="10">
+                    <span id="zoneBlurValue">10px</span>
+                    <label for="zoneGlassOpacity">Glass Opacity</label>
+                    <input type="range" id="zoneGlassOpacity" min="0" max="1" step="0.1" value="0.2">
+                    <span id="zoneGlassOpacityValue">20%</span>
+                </div>
+                
+                <div id="zoneBgImage" class="form-group" style="display: none;">
+                    <label for="zoneBackgroundImage">Upload Background Image</label>
+                    <input type="file" id="zoneBackgroundImage" accept="image/*">
+                    <div id="currentZoneImage"></div>
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeZoneModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save Zone</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/config.js') }}"></script>
+<script>
+// Initialize configuration page
+const displayId = {{ display[0] }};
+const layoutConfig = {{ display[3]|safe }};
+const backgroundConfig = {{ display[4]|safe }};
+
+window.addEventListener('DOMContentLoaded', function() {
+    initializeConfig(displayId, layoutConfig, backgroundConfig);
+});
+</script>
+{% endblock %}

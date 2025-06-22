@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ display[1] }} - Digital Signage Player</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/player.css') }}">
+    <style>
+        /* Fallback styles for debugging */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            color: white; 
+            font-family: Arial, sans-serif;
+        }
+        .top-bar { 
+            height: 60px; 
+            background: rgba(0,0,0,0.8); 
+            color: white; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 0 20px; 
+        }
+        .display-grid { 
+            position: absolute; 
+            top: 60px; 
+            left: 0; 
+            right: 0; 
+            bottom: 0; 
+            background: transparent; 
+            display: grid; 
+            gap: 2px; 
+            padding: 2px; 
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar with Date/Time -->
+    <div id="topBar" class="top-bar">
+        <div id="currentTime" class="time-display"></div>
+        <div id="currentDate" class="date-display"></div>
+    </div>
+    
+    <!-- Main Display Grid -->
+    <div id="displayGrid" class="display-grid">
+        <!-- Zones will be generated here by JavaScript -->
+    </div>
+    
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+    <script>
+        try {
+            // Initialize player with display configuration
+            const displayConfig = {{ display_data|tojson }};
+            
+            console.log('Display config from template:', displayConfig);
+            
+            // Adapt the config format for the player
+            const playerConfig = {
+                id: displayConfig.id,
+                name: displayConfig.name,
+                layout: displayConfig.layout_config,
+                background: displayConfig.background_config
+            };
+            
+            window.addEventListener('DOMContentLoaded', function() {
+                initializePlayer(playerConfig);
+            });
+        } catch (error) {
+            console.error('Error initializing player:', error);
+            document.getElementById('displayGrid').innerHTML = 
+                '<div style="color: red; padding: 20px;">JavaScript Error: ' + error.message + '</div>';
+        }
+    </script>
+</body>
+</html>

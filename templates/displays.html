@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Displays - Digital Signage{% endblock %}
+
+{% block body %}
+<div class="container">
+    <header class="header">
+        <h1>Digital Signage Displays</h1>
+        <div class="header-actions">
+            <button id="createDisplayBtn" class="btn btn-primary">
+                <i class="material-icons">add</i>
+                Create New Display
+            </button>
+            <a href="/logout" class="btn btn-secondary">
+                <i class="material-icons">logout</i>
+                Logout
+            </a>
+        </div>
+    </header>
+    
+    <div class="displays-grid">
+        {% for display in displays %}
+        <div class="display-card">
+            <h3>{{ display[1] }}</h3>
+            <p>{{ display[2] or 'No description' }}</p>
+            <p class="display-date">Created: {{ display[3][:10] }}</p>
+            <div class="display-actions">
+                <a href="/display/{{ display[0] }}" class="btn btn-primary">
+                    <i class="material-icons">settings</i>
+                    Configure
+                </a>
+                <a href="/player/{{ display[0] }}" class="btn btn-secondary" target="_blank">
+                    <i class="material-icons">visibility</i>
+                    View
+                </a>
+                <button class="btn btn-danger" onclick="confirmDeleteDisplay({{ display[0] }}, '{{ display[1] }}')">
+                    <i class="material-icons">delete</i>
+                    Remove
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% if not displays %}
+        <div class="empty-state">
+            <h3>No displays found</h3>
+            <p>Create your first display to get started</p>
+            <button class="btn btn-primary" onclick="createDisplay()">
+                <i class="material-icons">add_circle</i>
+                Create Display
+            </button>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Create Display Modal -->
+<div id="createModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Create New Display</h3>
+        <form id="createForm">
+            <div class="form-group">
+                <label for="displayName">Display Name</label>
+                <input type="text" id="displayName" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="displayDescription">Description</label>
+                <textarea id="displayDescription" name="description" rows="3"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div id="deleteModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <h3>Confirm Delete</h3>
+        <p>Are you sure you want to delete the display "<span id="deleteDisplayName"></span>"?</p>
+        <p class="text-small" style="color: var(--error-color); margin-top: 1rem;">
+            <i class="material-icons" style="font-size: 1rem; vertical-align: middle;">warning</i>
+            This action cannot be undone.
+        </p>
+        <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" onclick="closeDeleteModal()">Cancel</button>
+            <button type="button" class="btn btn-danger" onclick="deleteDisplay()">
+                <i class="material-icons">delete</i>
+                Delete Display
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+let displayToDelete = null;
+
+function createDisplay() {
+    document.getElementById('createModal').style.display = 'flex';
+}
+
+function closeModal() {
+    document.getElementById('createModal').style.display = 'none';
+}
+
+function confirmDeleteDisplay(displayId, displayName) {
+    displayToDelete = displayId;
+    document.getElementById('deleteDisplayName').textContent = displayName;
+    document.getElementById('deleteModal').style.display = 'flex';
+}
+
+function closeDeleteModal() {
+    document.getElementById('deleteModal').style.display = 'none';
+    displayToDelete = null;
+}
+
+document.getElementById('createDisplayBtn').addEventListener('click', createDisplay);
+
+document.getElementById('createForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    
+    try {
+        const response = await fetch('/api/display', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            window.location.reload();
+        } else {
+            alert('Failed to create display');
+        }
+    } catch (error) {
+        alert('Error creating display');
+    }
+});
+
+// Close modals when clicking outside
+document.getElementById('createModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+document.getElementById('deleteModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeDeleteModal();
+    }
+});
+</script>
+{% endblock %}
