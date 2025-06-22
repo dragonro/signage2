@@ -24,35 +24,35 @@ A modern, browser-based digital signage application built with Python Flask and 
 ## 🌟 Features
 
 ### Core Functionality
-- **🎯 Browser-based Display**: Full-screen player runs entirely in web browser
-- **📅 Always-visible Top Bar**: Shows current date and time
-- **🎛️ Configurable Grid Layout**: Support for 2x2, 3x2, 3x3, 4x4 grids
-- **🔧 Multiple Widget Types**:
-  - 🕒 Real-time Clock (analog & digital)
-  - ⏱️ Countdown Timer
-  - 📢 Text Announcements with rich formatting
-  - 🌐 iframe Embeds for web content
-  - 📰 RSS Feed Display
-- **🎨 Customizable Backgrounds**: Colors or uploaded images
-- **👁️ Opacity Controls**: Per-zone transparency settings
-- **🔤 Typography**: Wide selection of Google Fonts (Inter, Work Sans, Manrope, and more)
+- **Browser-based Display**: Full-screen player runs entirely in web browser
+- **Always-visible Top Bar**: Shows current date and time
+- **Configurable Grid Layout**: Support for 2x2, 3x2, 3x3, 4x4 grids
+- **Multiple Widget Types**:
+  - Real-time Clock (analog & digital)
+  - Countdown Timer
+  - Text Announcements with rich formatting
+  - iframe Embeds for web content
+  - RSS Feed Display
+- **Customizable Backgrounds**: Colors or uploaded images
+- **Opacity Controls**: Per-zone transparency settings
+- **Typography**: Wide selection of Google Fonts (Inter, Work Sans, Manrope, and more)
 
 ### Management Features
-- **🔐 Secure Authentication**: Modern login system
-- **📱 Multiple Display Support**: Manage unlimited displays
-- **💾 Persistent Storage**: SQLite database for configurations
-- **📤 File Upload**: Background image uploads with validation
-- **⚡ Live Preview**: Real-time configuration preview
-- **🗑️ Display Management**: Add, edit, and remove displays with confirmation
-- **✨ Modern UI**: Polished admin interface with Material Design icons
+- **Secure Authentication**: Modern login system
+- **Multiple Display Support**: Manage unlimited displays
+- **Persistent Storage**: SQLite database for configurations
+- **File Upload**: Background image uploads with validation
+- **Live Preview**: Real-time configuration preview
+- **Display Management**: Add, edit, and remove displays with confirmation
+- **Modern UI**: Polished admin interface with Material Design icons
 
 ### Technical Features
 - **🐳 Docker Ready**: Dockerfile and docker-compose included
-- **🚀 Easy Deployment**: Startup scripts for Windows, Linux, and macOS
-- **📱 Responsive Design**: Works on all screen sizes
-- **🔄 Auto-refresh**: Automatic content updates every 30 seconds
-- **🎨 CSS Variables**: Modern styling with custom properties
-- **📦 No Node.js**: Pure Python backend, vanilla JavaScript frontend
+- **Easy Deployment**: Startup scripts for Windows, Linux, and macOS
+- **Responsive Design**: Works on all screen sizes
+- **Auto-refresh**: Automatic content updates every 30 seconds
+- **CSS Variables**: Modern styling with custom properties
+- **No Node.js**: Pure Python backend, vanilla JavaScript frontend
 
 ## 🚀 Quick Start
 
