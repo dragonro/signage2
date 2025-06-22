@@ -92,8 +92,6 @@ The setup script will prompt you to create your admin credentials securely.
 
 ### Method 2: Manual Setup
 
-### Method 2: Manual Setup
-
 #### Linux/macOS
 ```bash
 # Clone the repository
@@ -288,7 +286,7 @@ Edit `static/css/player.css` to customize:
 - Adjust refresh intervals
 - Customize error handling
 
-## � Security & Authentication
+## Security & Authentication
 
 ### Admin Account Setup
 During the initial setup process (`./setup.sh` or `.\setup.ps1`), you'll be prompted to create your admin credentials:
@@ -629,27 +627,5 @@ These screenshots demonstrate the modern UI and functionality of the application
 ## 📝 License
 
 This project is open source. Feel free to use, modify, and distribute.
-
-## 🆘 Support
-
-For issues and questions:
-1. Check troubleshooting section
-2. Review application logs
-3. Check browser console for errors
-4. Verify network connectivity
-
-## 🎯 Roadmap
-
-Future enhancements:
-- [ ] Weather widget integration
-- [ ] Social media feeds
-- [ ] Video playback support
-- [ ] Scheduling system
-- [ ] REST API expansion
-- [ ] Theme system
-- [ ] Advanced animations
-- [ ] Multi-language support
-
----
 
 **Happy Digital Signage! 🎉**
