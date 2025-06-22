@@ -65,7 +65,7 @@ A modern, browser-based digital signage application built with Python Flask and 
 #### Linux/macOS
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/AiryAir/signage2
 cd signage2
 
 # Run quick setup (includes admin account configuration)
@@ -78,7 +78,7 @@ cd signage2
 #### Windows (PowerShell)
 ```powershell
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/AiryAir/signage2
 cd signage2
 
 # Run quick setup (includes admin account configuration)
@@ -95,7 +95,7 @@ The setup script will prompt you to create your admin credentials securely.
 #### Linux/macOS
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/AiryAir/signage2
 cd signage2
 
 # Run the startup script
@@ -108,7 +108,7 @@ cd signage2
 #### Windows (PowerShell)
 ```powershell
 # Clone the repository  
-git clone <repository-url>
+git clone https://github.com/AiryAir/signage2
 cd signage2
 
 # Run the startup script
