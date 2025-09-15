@@ -169,7 +169,7 @@ function createZone(zone, index) {
             createImageWidget(contentElement, zone.content);
             break;
         case 'video':
-            createVideoWidget(contentElement, zone.content);
+            createVideoWidget(contentElement, zone.content, zone);
             break;
         case 'slideshow':
             createSlideshowWidget(contentElement, zone.content, index);
@@ -295,11 +295,16 @@ function createVideoWidget(container, videoUrl) {
         const youtubeRegex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
         const youtubeMatch = videoUrl.match(youtubeRegex);
         
+        // Get mute config from zone
+        let mute = true;
+        if (typeof arguments[2] === 'object' && arguments[2] !== null && 'mute' in arguments[2]) {
+            mute = arguments[2].mute !== false;
+        }
         if (youtubeMatch) {
             // YouTube video - use embed iframe
             const videoId = youtubeMatch[1];
             container.innerHTML = `
-                <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1"
+                <iframe src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${mute ? 1 : 0}&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1"
                         style="width: 100%; height: 100%; border: none; border-radius: 8px;"
                         allow="autoplay; encrypted-media"
                         allowfullscreen>
@@ -323,7 +328,7 @@ function createVideoWidget(container, videoUrl) {
         const videoElement = document.createElement('video');
         videoElement.style.cssText = 'width: 100%; height: 100%; object-fit: cover; border-radius: 8px;';
         videoElement.autoplay = true;
-        videoElement.muted = true;
+        videoElement.muted = mute;
         videoElement.loop = true;
         videoElement.controls = false;
         
